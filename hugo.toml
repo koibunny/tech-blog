@@ -10,7 +10,7 @@
 # 改 GitHub 用户名或仓库名后必须同步这里：Pages 不会把旧地址重定向过来（旧地址直接 404），
 # 而 canonical / og:url / og:image / sitemap 全部由它生成。
 baseURL = 'https://koibunny.cn/'
-title = 'KoiBunny 的 AI 博客'
+title = '锦鲤兔 KoiBunny 的 AI 博客'
 theme = 'nexus'
 
 locale = 'zh-CN'
@@ -38,8 +38,10 @@ enableGitInfo = true
 
 # ── 参数 ─────────────────────────────────────────────────────────────────────
 [params]
+  siteName = '锦鲤兔'
+  alternateSiteName = 'KoiBunny'
   tagline = 'KoiBunny · AI LEARNING LAB'
-  description = '这里记录我自己会回头查的笔记：能跑起来的实验、读过源码后的结论，以及踩过的坑。'
+  description = '锦鲤兔的 AI 博客：记录能跑起来的实验、读过源码后的结论，以及踩过的坑。'
   heroTitle = '把 AI 说明白，也把实验跑起来'
   author = 'KoiBunny'
   authorRole = 'AI 代理工作流 / 独立开发者'

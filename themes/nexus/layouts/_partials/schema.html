@@ -7,14 +7,18 @@
   https://gohugo.io/functions/safe/js/
 */ -}}
 {{- $author := site.Params.author | default site.Title -}}
+{{- $siteName := site.Params.siteName | default site.Title -}}
 {{- $schema := dict
   "@context" "https://schema.org"
   "@type" "WebSite"
-  "name" site.Title
+  "name" $siteName
   "url" site.BaseURL
   "inLanguage" site.Language.Locale
   "author" (dict "@type" "Person" "name" $author)
 -}}
+{{- with site.Params.alternateSiteName -}}
+  {{- $schema = merge $schema (dict "alternateName" .) -}}
+{{- end -}}
 {{- with site.Params.description -}}
   {{- $schema = merge $schema (dict "description" .) -}}
 {{- end -}}
