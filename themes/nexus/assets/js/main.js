@@ -209,4 +209,58 @@
   if (pathSlot) {
     pathSlot.textContent = window.location.pathname;
   }
+
+  /* ── 7. 首次进入网站的欢迎图 ──────────────────────────────────────────
+     同一标签页会话只展示一次；点击图片、遮罩、右上角按钮或按 Esc 都可关闭。 */
+  var welcome = document.querySelector("[data-welcome-overlay]");
+  var welcomeDialog = welcome && welcome.querySelector(".welcome-dialog");
+  var welcomeClose = welcome && welcome.querySelector("[data-welcome-close]");
+
+  if (welcome && welcomeDialog && welcomeClose) {
+    var welcomeStorageKey = "koibunny-welcome-dismissed";
+    var welcomeDismissed = false;
+    var focusBeforeWelcome = document.activeElement;
+
+    try {
+      welcomeDismissed = window.sessionStorage.getItem(welcomeStorageKey) === "1";
+    } catch (error) {
+      welcomeDismissed = false;
+    }
+
+    var dismissWelcome = function () {
+      if (welcome.hidden || welcome.classList.contains("is-closing")) return;
+
+      welcome.classList.add("is-closing");
+      welcome.classList.remove("is-visible");
+      document.documentElement.removeAttribute("data-welcome-open");
+
+      try {
+        window.sessionStorage.setItem(welcomeStorageKey, "1");
+      } catch (error) {
+        // 隐私模式或存储被禁用时，关闭功能仍然正常工作。
+      }
+
+      window.setTimeout(function () {
+        welcome.hidden = true;
+        welcome.classList.remove("is-closing");
+        if (focusBeforeWelcome && typeof focusBeforeWelcome.focus === "function") {
+          focusBeforeWelcome.focus();
+        }
+      }, 180);
+    };
+
+    if (!welcomeDismissed) {
+      welcome.hidden = false;
+      document.documentElement.setAttribute("data-welcome-open", "");
+      window.requestAnimationFrame(function () {
+        welcome.classList.add("is-visible");
+        welcomeDialog.focus({ preventScroll: true });
+      });
+
+      welcome.addEventListener("click", dismissWelcome);
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") dismissWelcome();
+      });
+    }
+  }
 })();

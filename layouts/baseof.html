@@ -20,6 +20,8 @@
 <body class="kind-{{ .Kind }}{{ if .IsHome }} is-home{{ end }}">
   <a class="skip-link" href="#main">跳到主要内容</a>
 
+  {{ partial "welcome.html" . }}
+
   <div class="page-shell">
     <div class="bg-layer" aria-hidden="true"></div>
     <div class="scroll-progress" aria-hidden="true"><span data-scroll-progress></span></div>

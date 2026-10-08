@@ -1,0 +1,87 @@
+/* 首次进入网站时显示的欢迎层。默认由 hidden 隐藏，只有脚本可用时才打开。 */
+.welcome-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: clamp(12px, 3vw, 40px);
+  overflow: auto;
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.86);
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+
+.welcome-overlay[hidden] {
+  display: none;
+}
+
+.welcome-overlay.is-visible {
+  opacity: 1;
+}
+
+.welcome-overlay.is-closing {
+  pointer-events: none;
+  opacity: 0;
+}
+
+.welcome-dialog {
+  position: relative;
+  width: min(48.7296vw, 777.6px);
+  max-height: 92vh;
+  line-height: 0;
+  cursor: pointer;
+}
+
+.welcome-dialog:focus {
+  outline: none;
+}
+
+.welcome-image {
+  width: 100%;
+  max-height: 92vh;
+  object-fit: contain;
+  user-select: none;
+  image-rendering: pixelated;
+}
+
+/* 图片中已有关闭按钮图案；透明热区让它成为真正可操作、可聚焦的按钮。 */
+.welcome-close {
+  position: absolute;
+  top: 7.2%;
+  right: 5.2%;
+  width: 6.6%;
+  min-width: 38px;
+  aspect-ratio: 1;
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+}
+
+.welcome-close:focus-visible {
+  outline: 4px solid #fff8e7;
+  outline-offset: 4px;
+  box-shadow: 0 0 0 7px #ef7d22;
+}
+
+html[data-welcome-open] {
+  overflow: hidden;
+}
+
+@media (max-width: 680px) {
+  .welcome-overlay {
+    padding: 8px;
+  }
+
+  .welcome-close {
+    min-width: 34px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .welcome-overlay {
+    transition: none;
+  }
+}
